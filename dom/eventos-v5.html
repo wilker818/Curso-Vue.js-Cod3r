@@ -1,0 +1,51 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<div id="app">
+  <p>{{ contador }}</p>
+  <!--$envent  é uma palavra reservada de uso unico-->
+  <!-- só utilizar o $event quando tiver passado alguma modificação antes caso contrario usar event-->
+  <button v-on:click="somar(5, $event)">Somar ++</button>
+  <p v-on:mousemove="atualizarXY">
+    Mouse: {{ x }}, Mouse {{ y }}
+    <span v-on:mousemove.stop.prevent="">Stop Here!!!</span>
+  </p>
+  <a v-on:click.prevent="naoNavegar" href="http://google.com.br">Google</a>
+  <hr />
+  <br />
+  <!-- se eu colocar enter só irá exibir o alerta quando precionar enter
+      se eu colocar enter.alt só irá exbir o alerta quando precionar enter e alt
+    -->
+  <input type="text" v-on:keyup.enter.alt="exibirAlerta" />
+</div>
+
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      contador: 0,
+      x: 0,
+      y: 0,
+    },
+    methods: {
+      //Aqui já não é necessario passar o $event, já pode colocar  event ou eve ou e
+      somar(passo, event) {
+        console.log(passo, event);
+        this.contador += passo;
+      },
+      atualizarXY(event) {
+        this.x = event.clientX;
+        this.y = event.clientY;
+      },
+      exibirAlerta() {
+        alert("Estou te alertando!");
+      },
+      naoNavegar(event) {
+        console.log("não navegar");
+        // event.prevenDefault()  previne a ação padrão
+      },
+      // parar(envent) {
+      //event.stopPropagation();
+      //}
+    },
+  });
+</script>
